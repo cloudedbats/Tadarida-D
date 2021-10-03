@@ -1,7 +1,5 @@
 # Tadarida-D - For Raspberry Pi
 
-**Note: Work in progress...**
-
 Tadarida is a software toolbox that can be used for automatic identification of species that produces sound, in this case ultrasonic sound. Tadarida is based on an AI technique for supervised learning that is called random forest. The Tadarida software is divided into three software modules, Tadarida-D (detecting), Tadarida-L (labelling) and Tadarida-C (classifier). Tadarida-L is used for work with the reference sound library and Tadarida-C takes care of the random forest parts, both when building the classifiers and when running the automatic classification of recorded sound. The source code for all Tadarida modules can be found here: https://github.com/YvesBas
 
 The module we use here is the Tadarida-D module. It will locate the sound events in the recorded sound files, and then extract a huge number of features from each sound event that will be stored in a tabular text file. There will be one text file for each sound file and they will have the same name as the corresponding sound file, but with the extension ".ta". Those text files can then be used when running Tadarida-C for automatic identification to species level.
@@ -18,10 +16,10 @@ There are two main reasons for why it can be useful to implement Tadarida-D in a
     sudo apt update
     sudo apt upgrade
 
-    # Install QT and the two libraries used. (TODO: Check if the libraries are needed here.)
+    # Install QT and the two libraries used.
     sudo apt install qt5-default
-    # sudo apt install libfftw3-3
-    # sudo apt install libsndfile-dev
+    sudo apt install libfftw3-3
+    sudo apt install libsndfile-dev
 
     # Check out this fork of Tadatida-D code from GitHub.
     git clone https://github.com/cloudedbats/Tadarida-D.git
