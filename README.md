@@ -8,9 +8,9 @@ The module we use here is the Tadarida-D module. It will locate the sound events
 
 There are two main reasons for why it can be useful to implement Tadarida-D in a detector.
 
-1. The size of the tabular text files containing extracted features are small compared to the recorded sound files. Therefore it can be more effective to use this compact file format when the recorded data is shared with someone that want to run the Tadarida classification on their machines. Running the entire classification locally is not possible because the reference sound library and reference sound database are not publicly available.
+1. The size of the tabular text files containing extracted features are small compared to the recorded sound files. Therefore it can be more effective to use this compact file format when the recorded data is shared with someone who want to run the Tadarida classification on their machines. Running the entire classification locally is not possible because the reference sound library and reference sound database are not publicly available.
 
-2. The features extracted by Tadarida-D can be used for other purposes, for example visualisation or running other AI systems for classification. This can be used, for example, to build classifiers based on other reference sound libraries from other parts of the world, that maybe also are based on other AI techniques. Tadarida-D is released under the LGPL-3.0 license and can therefore be modified when needed. The extracted features are described in this document: ==============
+2. The features extracted by Tadarida-D can be used for other purposes, for example visualisation or running other AI systems for classification. This can be used, for example, to build classifiers based on other reference sound libraries from other parts of the world, that maybe also are based on other AI techniques. Tadarida-D is released under the LGPL-3.0 license and can therefore be modified when needed. The extracted features are described in this document: Manual_Tadarida-D.odt
 
 ## Installation
 
@@ -18,7 +18,7 @@ There are two main reasons for why it can be useful to implement Tadarida-D in a
     sudo apt update
     sudo apt upgrade
 
-    # Install QT and the two modules used. TODO: Check if the modules are needed to install.
+    # Install QT and the two libraries used. (TODO: Check if the libraries are needed here.)
     sudo apt install qt5-default
     # sudo apt install libfftw3-3
     # sudo apt install libsndfile-dev
@@ -28,9 +28,10 @@ There are two main reasons for why it can be useful to implement Tadarida-D in a
 
 ## Run Tadarida-D
 
-Assume that you have a directory called "StationA_2021-10-01" where the sound files are located.
+Example where you have a directory called "StationA_2021-10-01" where the sound files are located.
 
-    home/pi/tadarida/tadaridaD_rpi/TadaridaD /home/pi/wurb_recordings/StationA_2021-10-01/
+    cd /home/pi/Tadarida-D/install_rpi
+    ./TadaridaD /home/pi/wurb_recordings/StationA_2021-10-01/
 
 ## Python script to run Tadarida-D
 
@@ -45,16 +46,14 @@ This is already done in this GitHub fork of Tadarida-D, but the process for the 
     sudo apt update
     sudo apt upgrade
 
-    # Install QT and the two modules used. 
+    # Install QT and the two libraries used. 
     sudo apt install qt5-default
     sudo apt install qt5-qmake
     sudo apt install libfftw3-3
     sudo apt install libsndfile-dev
 
-    # Check out the Tadatida-D code from GitHub.
-    mkdir tadarida
-    cd tadarida
-    git clone https://github.com/YvesBas/Tadarida-D.git
+    # Check out this fork of Tadatida-D code from GitHub.
+    git clone https://github.com/cloudedbats/Tadarida-D.git
 
     # Go to the source directory.
     cd Tadarida-D/sources/
@@ -62,20 +61,22 @@ This is already done in this GitHub fork of Tadarida-D, but the process for the 
     # Locate the installed modules and move them to the source directory. 
     sudo find / -name libsndfile*
     sudo find / -name libfftw3f*
+    # Remove the old versions of the two used libs and copy the new versions.
+    rm Libs/libfftw3f.so 
+    rm Libs/libsndfile.so
     # Note: These paths may be different depending on the results from the "find" commands above.
-    cp /usr/lib/arm-linux-gnueabihf/libsndfile.so.1 /home/pi/tadarida/Tadarida-D/sources/Libs/
-    cp /usr/lib/arm-linux-gnueabihf/libfftw3f.so.3 /home/pi/tadarida/Tadarida-D/sources/Libs/
-    # Remove the old versions of the modules.
-    rm libfftw3f.so
-    rm libsndfile.so
-    # Rename this one.
-    cp libfftw3f.so.3 libfftw3f.so
+    cp /usr/lib/arm-linux-gnueabihf/libfftw3f.so.3 Libs/libfftw3f.so
+    cp /usr/lib/arm-linux-gnueabihf/libsndfile.so.1 Libs/libsndfile.so
 
-    # Recompile the code 
+    # Build Tadarida-D. 
     qmake
     make
 
-    # Copy the created module and used libraries.
-    cp TadaridaD /home/pi/tadarida/tadaridaD_rpi/
-    cp libsndfile.so.1 /home/pi/tadarida/tadaridaD_rpi/
-    cp libfftw3f.so /home/pi/tadarida/tadaridaD_rpi/
+    # Create a new directory and copy files.
+    mkdir /home/pi/Tadarida-D/install_rpi
+    cp TadaridaD /home/pi/Tadarida-D/install_rpi
+    cp Libs/libfftw3f.so /home/pi/Tadarida-D/install_rpi
+    cp Libs/libsndfile.so /home/pi/Tadarida-D/install_rpi
+    
+    # And finally commit and push to GitHub.
+    
