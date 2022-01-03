@@ -45,7 +45,8 @@ This is already done in this GitHub fork of Tadarida-D, but the process for the 
     sudo apt upgrade
 
     # Install QT and the two libraries used. 
-    sudo apt install qt5-default
+    # sudo apt install qt5-default # Not available in Bullseye.
+    sudo apt install qttools5-dev-tools # Use this in Bullseye.
     sudo apt install qt5-qmake
     sudo apt install libfftw3-3
     sudo apt install libsndfile-dev

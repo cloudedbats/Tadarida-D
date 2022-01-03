@@ -1,0 +1,9 @@
+
+pathToTadatridaD:
+  install_rpi/TadaridaD
+
+baseDir:
+  /mnt/usb4tb/rec2022/se-o-1
+
+zipTargetPath:
+  /mnt/usb4tb/tadarida2022/se-o-1
